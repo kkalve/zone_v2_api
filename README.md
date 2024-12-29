@@ -48,9 +48,9 @@ The **a_record.py** script allows you to check if the IP address of a domain mat
 ##### IP providers
 The script uses the following IP providers to get your public IP address:
 
- * ipify.org
- * ipinfo.io
- * ident.me
+* [ipify.org](https://www.ipify.org)
+* [ipinfo.io](https://ipinfo.io)
+* [ident.me](https://api.ident.me/)
 
 The API endpoints for the IP providers (both IPv4 and IPv6) are defined in the **ip_provider.py** file. Feel free to add new providers to this list. Ensure that the API returns the IP address as a plain text response.
 
