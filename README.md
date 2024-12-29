@@ -19,7 +19,7 @@ I wrote this for my own use to update the A records of my domains when my IP cha
 
 2. Install the required dependencies:
     ```sh
-    pip install -r requirements.txt
+    pip3 install -r requirements.txt
     ```
 
 3. Set up your environment variables in a .env file:

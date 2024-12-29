@@ -74,6 +74,9 @@ With this option you can force the check while specifying the record identificat
 
     init_logging(logging_level=args.logging_level)    
 
-    destination_ip = args.destination if args.destination else get_my_ip(args.ip_provider)
+    destination_ip = args.destination
+    if not destination_ip:
+        destination_ip = get_my_ip(args.ip_provider)
+        logging.info(f'Destination IP not specified, using public IP address: {destination_ip} (from {args.ip_provider})')
     
     check_dns(args.domain, destination_ip, args.dry_run, args.force_nameserver_check)
