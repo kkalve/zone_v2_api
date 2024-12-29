@@ -66,13 +66,14 @@ If you have multiple domains, you can specify multiple --domain arguments.
 If you have multiple records for a domain, you can specify the record identificator by adding a colon and the identificator after the domain name, eg. example.com:123""")
     parser.add_argument('--dry-run', action='store_true', help='Perform a dry-run without updating the DNS record')
     parser.add_argument('--destination', help='Specify the destination IP address (default is your public IP provided by --ip_provider)')
-    parser.add_argument('--logging_level', default=20, help=LOGGING_LEVEL_HELPER, type=int)
+    parser.add_argument('--syslog_logging_level', default=20, help=LOGGING_LEVEL_HELPER, type=int)
+    parser.add_argument('--console_logging_level', default=20, help=LOGGING_LEVEL_HELPER, type=int)
     parser.add_argument('--ip_provider', default=(available_ip_providers[0] if len(available_ip_providers) else None), help='Provider to get the public IP address if destination argument is not given', choices=available_ip_providers)
     parser.add_argument('--force-nameserver-check', action='store_true', help="""Force check the nameserver IP against the destination IP. This is done automatically if you do not specify the record identificator. 
 With this option you can force the check while specifying the record identificator.""")
     args = parser.parse_args()
 
-    init_logging(logging_level=args.logging_level)    
+    init_logging(syslog_logging_level=args.syslog_logging_level, console_logging_level=args.console_logging_level)
 
     destination_ip = args.destination
     if not destination_ip:

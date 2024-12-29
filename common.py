@@ -65,7 +65,7 @@ LOGGING_LEVEL_HELPER = """
 50 - CRITICAL
 """
 
-def init_logging(logging_level = 20, logging_formatter = None):
+def init_logging(console_logging_level = 20, syslog_logging_level = 20,logging_formatter = None):
     if sys.platform.startswith('linux'):
         SYSLOG_SOCKET = '/dev/log'
     elif sys.platform.startswith('freebsd'):
@@ -85,14 +85,12 @@ def init_logging(logging_level = 20, logging_formatter = None):
 
     syslog = logging.handlers.SysLogHandler(address = SYSLOG_SOCKET)
     syslog.setFormatter(formatter)
+    syslog.setLevel(syslog_logging_level)
     my_logger.addHandler(syslog)
 
     consoleHandler = logging.StreamHandler()
     consoleHandler.setFormatter(formatter)
 
-    consoleHandler.setLevel(logging_level)
+    consoleHandler.setLevel(console_logging_level)
 
     my_logger.addHandler(consoleHandler)
-
-    if logging_level != 10:
-        logging.getLogger('requests').setLevel(logging.WARNING)
