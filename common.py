@@ -57,7 +57,7 @@ def get_my_ip(provider: str, ip_type: str = 'ipv4') -> str:
     return request(ip_providers[provider][ip_type]).text.strip()
 
 LOGGING_LEVEL_HELPER = """
-0  - NO SET
+0  - DISABLED
 10 - DEBUG
 20 - INFO
 30 - WARNING
@@ -65,7 +65,7 @@ LOGGING_LEVEL_HELPER = """
 50 - CRITICAL
 """
 
-def init_logging(console_logging_level = 20, syslog_logging_level = 20,logging_formatter = None):
+def init_logging(console_logging_level: int = 20, syslog_logging_level: int = 20,logging_formatter = None):
     if sys.platform.startswith('linux'):
         SYSLOG_SOCKET = '/dev/log'
     elif sys.platform.startswith('freebsd'):
@@ -83,14 +83,16 @@ def init_logging(console_logging_level = 20, syslog_logging_level = 20,logging_f
     else:
         formatter = logging.Formatter('%(asctime)s [%(process)d] %(levelname)s: %(filename)s:%(lineno)d %(message)s')
 
-    syslog = logging.handlers.SysLogHandler(address = SYSLOG_SOCKET)
-    syslog.setFormatter(formatter)
-    syslog.setLevel(syslog_logging_level)
-    my_logger.addHandler(syslog)
+    if syslog_logging_level != 0:
+        syslog = logging.handlers.SysLogHandler(address = SYSLOG_SOCKET)
+        syslog.setFormatter(formatter)
+        syslog.setLevel(syslog_logging_level)
+        my_logger.addHandler(syslog)
 
-    consoleHandler = logging.StreamHandler()
-    consoleHandler.setFormatter(formatter)
+    if console_logging_level != 0:
+        consoleHandler = logging.StreamHandler()
+        consoleHandler.setFormatter(formatter)
 
-    consoleHandler.setLevel(console_logging_level)
+        consoleHandler.setLevel(console_logging_level)
 
-    my_logger.addHandler(consoleHandler)
+        my_logger.addHandler(consoleHandler)
