@@ -1,4 +1,4 @@
-# Zone.eu API DNS updater
+# Zone.eu API DNS updater with Python
 This project provides a set of tools to interact with the Zone.eu API, specifically for managing DNS A records using Python3.
 
 I wrote this for my own use to update the A records of my domains when my IP changes. The script runs on a Raspberry Pi, where I also have a web server.
@@ -68,6 +68,9 @@ To set the DNS A record to specific IP (not your own):
 ```sh
 python3 a_record.py -d example.com --destination 127.0.0.1
 ```
+
+## Zone API v2
+For more information on the Zone API v2, refer to the [API documentation](https://api.zone.eu/v2). To learn how to obtain a token for the Zone API, visit the [Zone API token guide](https://help.zone.eu/en/kb/zone-api-en/).
 
 ## TODO
  * Add example how to set it up as linux systemd service
