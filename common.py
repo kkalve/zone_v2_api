@@ -65,7 +65,7 @@ LOGGING_LEVEL_HELPER = """
 50 - CRITICAL
 """
 
-def init_logging(console_logging_level: int = 20, syslog_logging_level: int = 20,logging_formatter = None):
+def init_logging(console_logging_level: int = 20, syslog_logging_level: int = 20, logging_formatter: logging.Formatter = None):
     if sys.platform.startswith('linux'):
         SYSLOG_SOCKET = '/dev/log'
     elif sys.platform.startswith('freebsd'):
@@ -78,21 +78,15 @@ def init_logging(console_logging_level: int = 20, syslog_logging_level: int = 20
     my_logger = logging.getLogger('')
     my_logger.setLevel(logging.DEBUG)
 
-    if logging_formatter:
-        formatter = logging_formatter
-    else:
-        formatter = logging.Formatter('%(asctime)s [%(process)d] %(levelname)s: %(filename)s:%(lineno)d %(message)s')
-
+    formatter_format = '[%(process)d] %(levelname)s: %(filename)s:%(lineno)d %(message)s'
     if syslog_logging_level != 0:
         syslog = logging.handlers.SysLogHandler(address = SYSLOG_SOCKET)
-        syslog.setFormatter(formatter)
+        syslog.setFormatter(logging_formatter if logging_formatter else logging.Formatter(formatter_format))
         syslog.setLevel(syslog_logging_level)
         my_logger.addHandler(syslog)
 
     if console_logging_level != 0:
         consoleHandler = logging.StreamHandler()
-        consoleHandler.setFormatter(formatter)
-
+        consoleHandler.setFormatter(logging_formatter if logging_formatter else logging.Formatter('%(asctime)s ' + formatter_format))
         consoleHandler.setLevel(console_logging_level)
-
         my_logger.addHandler(consoleHandler)
