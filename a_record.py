@@ -29,9 +29,12 @@ def check_dns(domains: List[str], destination_ip: str, dry_run: bool = False, fo
 
         domains_data = get_a_record(domain_name, domain_identificator)
         if not domains_data:
-            # @TODO: create a new record if not found
-            # https://api.zone.eu/v2#operation/creatednsarecord
-            logging.warning(f'No data found for {domain}')
+            if domain_identificator:
+                logging.warning(f'No data found for {domain_name} with identificator {domain_identificator}, trying without identificator')
+            else:
+                logging.warning(f'No data found for {domain}')
+                # @TODO: create a new record if not found
+                # https://api.zone.eu/v2#operation/creatednsarecord
             continue
 
         if len(domains_data) > 1:
