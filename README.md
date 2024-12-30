@@ -97,18 +97,26 @@ To set up the service:
     sudo cp systemd/a_record_update.timer /etc/systemd/system/
     ```
 
-2. Reload the systemd daemon to recognize the new service and timer:
+2. Edit `/etc/systemd/system/a_record_update.service` file - update any placeholders starting with `YOUR_` to match your configuration
+    ```sh
+    sudo vim /etc/systemd/system/a_record_update.service
+    ```
+
+3. Reload the systemd daemon to recognize the new service and timer:
     ```sh
     sudo systemctl daemon-reload
     ```
 
-3. Enable and start the timer to run the script periodically:
+4. Enable and start the timer to run the script periodically:
     ```sh
     sudo systemctl enable a_record_update.timer
     sudo systemctl start a_record_update.timer
     ```
 
-Currently, the script is set to run every 1 minute, but you can adjust the interval as needed. Additionally, review and update any placeholders starting with `YOUR_` in the `systemd/a_record_update.service` file to match your configuration.
+Currently, the script is configured to run every minute, but you can adjust the interval as needed. For more details, refer to the [systemd timer configuration](systemd/a_record_update.timer).
+```sh
+sudo vim /etc/systemd/system/a_record_update.timer
+```
 
 Alternatively, you can add the script to crontab for scheduled execution, but using systemd is recommended for better management and logging.
 
