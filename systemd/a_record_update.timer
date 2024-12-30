@@ -1,0 +1,10 @@
+[Unit]
+Description=1min timer for a_record_update.service
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=1min
+Unit=a_record_update.service
+
+[Install]
+WantedBy=multi-user.target

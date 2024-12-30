@@ -1,0 +1,8 @@
+[Unit]
+Description=Check and update dns a record
+
+[Service]
+User=pi
+Environment="ZONE_USERNAME=YOUR_USERNAME"
+Environment="ZONE_TOKEN=YOUR_TOKEN"
+ExecStart=/usr/bin/python3 YOUR_PATH/zone_v2_api/a_record.py --console_logging_level 0 -d YOUR_DOMAIN
